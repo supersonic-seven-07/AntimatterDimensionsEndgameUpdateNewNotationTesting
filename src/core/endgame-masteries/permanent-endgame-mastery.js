@@ -36,6 +36,10 @@ export class PermanentEndgameMasteryState extends EndgameMasteriesState {
       }
     }
 
+    if (this.id == 2) {
+      respecEndgameMasteries();
+    }
+
     player.endgameMasteries.permanentMasteries.push(this.id);
     Currency.endgameSkills.subtract(this.cost);
     return true;
