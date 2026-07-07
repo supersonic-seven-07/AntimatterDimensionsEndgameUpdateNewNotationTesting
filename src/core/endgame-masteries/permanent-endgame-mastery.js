@@ -56,6 +56,8 @@ export function PermanentEndgameMastery(id) {
 
 EndgameMastery.endgameUpgrades = PermanentEndgameMasteryState.masteries[1];
 
+EndgameMastery.permaMasteries = PermanentEndgameMasteryState.masteries[2];
+
 EndgameMastery.boughtEndgameUpgradesEM = function() {
   return player.endgameMasteries.permanentMasteries.map(id => PermanentEndgameMasteryState.masteries[id]);
 };
