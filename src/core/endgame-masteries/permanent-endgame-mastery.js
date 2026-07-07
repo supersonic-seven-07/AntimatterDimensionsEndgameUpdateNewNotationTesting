@@ -23,7 +23,7 @@ export class PermanentEndgameMasteryState extends EndgameMasteriesState {
   }
 
   get totalEndgameSkillRequirement() {
-    return this.id === 1 ? 100 : 0;
+    return this.id === 2 ? 150000 : 100;
   }
 
   purchase(quiet = false) {
