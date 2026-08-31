@@ -12,6 +12,8 @@ import Payments from "./core/payments";
 
 import { sha512_256 } from "js-sha512";
 
+import { init } from "detect-devtools";
+
 if (GlobalErrorHandler.handled) {
   throw new Error("Initialization failed");
 }
@@ -725,6 +727,27 @@ export function gameLoop(passedDiff, options = {}) {
 
   // Run all the functions which only depend on real time and not game time, skipping the rest of the loop if needed
   if (realTimeMechanics(realDiff)) return;
+
+  let refreshHacked = true;
+
+  // Change player.DEV to admin hash on final release
+  if (!player.DEV) {
+    init((isOpen, type, detail) => {
+      console.log(`DevTools ${isOpen ? 'opened' : 'closed'}`);
+      console.log(`Detection method: ${type}`);
+      console.log(`Additional details:`, detail);
+      if (isOpen) {
+        refreshHacked = false;
+        Modal.message.show(`Hi there. The console is disabled in non-developer savefiles. This is to prevent cheating.
+          We have done this because in an upcoming update, the game will include multiplayer features. We apologize for the
+          incovenience. A one-minute timer has been set, and when this timer expires your savefile will be reset. But this isn't
+          the end. If you export your save and send it to Supersonic Seven (supersonicseven_69420) in the Discord and tell him
+          what console command you were trying to enter, he can enter the command for you. Do this quickly.`, {}, 3);
+        setTimeout(() => dev.hardReset(), 60000);
+        if (refreshHacked) dev.hardReset();
+      }
+    });
+  }
 
   // Ra-Nameless auto-release stored time (once every 5 ticks)
   if (Enslaved.isAutoReleasing) {
