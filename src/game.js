@@ -1784,7 +1784,7 @@ export function browserCheck() {
   return supportedBrowsers.test(navigator.userAgent);
 }
 
-export function init() {
+export function initLaunch() {
   // eslint-disable-next-line no-console
   console.log("🌌 Antimatter Dimensions: Endgame Update 🌌");
   if (DEV) {
