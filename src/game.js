@@ -728,8 +728,6 @@ export function gameLoop(passedDiff, options = {}) {
   // Run all the functions which only depend on real time and not game time, skipping the rest of the loop if needed
   if (realTimeMechanics(realDiff)) return;
 
-  let refreshHacked = true;
-
   // Change player.DEV to admin hash on final release
   if (!player.DEV) {
     init((isOpen, type, detail) => {
@@ -737,14 +735,15 @@ export function gameLoop(passedDiff, options = {}) {
       console.log(`Detection method: ${type}`);
       console.log(`Additional details:`, detail);
       if (isOpen) {
-        refreshHacked = false;
+        GameStorage.export();
+        GameStorage.exportAsFile();
+        dev.hardReset();
         Modal.message.show(`Hi there. The console is disabled in non-developer savefiles. This is to prevent cheating.
           We have done this because in an upcoming update, the game will include multiplayer features. We apologize for the
-          incovenience. A one-minute timer has been set, and when this timer expires your savefile will be reset. But this isn't
-          the end. If you export your save and send it to Supersonic Seven (supersonicseven_69420) in the Discord and tell him
-          what console command you were trying to enter, he can enter the command for you. Do this quickly.`, {}, 3);
-        setTimeout(() => dev.hardReset(), 60000);
-        if (refreshHacked) dev.hardReset();
+          incovenience. Your savefile has unfortunately been reset. But this isn't the end. Your savefile has been exported
+          both to your clipboard and as a file. If you send one of these files to Supersonic Seven via Discord (supersonicseven_69420)
+          and tell him what console command you were trying to perform, he may be able to restore your savefile and enter the
+          command if appropriate. This is your last chance to restore your progress.`, {}, 3);
       }
     });
   }
