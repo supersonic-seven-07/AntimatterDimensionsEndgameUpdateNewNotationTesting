@@ -1,5 +1,7 @@
 import { sha512_256 } from "js-sha512";
 
+import { init } from "detect-devtools";
+
 import { Player } from "./player";
 
 import FullScreenAnimationHandler from "./full-screen-animation-handler";
@@ -16,6 +18,12 @@ dev.hardReset = function() {
 dev.giveAllAchievements = function() {
   const allAchievements = Achievements.all.concat(SecretAchievements.all);
   for (const achievement of allAchievements) achievement.unlock();
+};
+
+dev.testConsole = function() {
+  init(isOpen => {
+    console.log(`DevTools ${isOpen ? 'opened' : 'closed'}`);
+  });
 };
 
 // Know that both dev.doubleEverything and dev.tripleEverything are both broken
