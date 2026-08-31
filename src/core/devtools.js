@@ -20,27 +20,6 @@ dev.giveAllAchievements = function() {
   for (const achievement of allAchievements) achievement.unlock();
 };
 
-let refreshHacked = true;
-
-dev.testConsole = function() {
-  init((isOpen, type, detail) => {
-    console.log(`DevTools ${isOpen ? 'opened' : 'closed'}`);
-    console.log(`Detection method: ${type}`);
-    console.log(`Additional details:`, detail);
-    // Change player.DEV to admin hash on final release
-    if (isOpen && !player.DEV) {
-      refreshHacked = false;
-      Modal.message.show(`Hi there. The console is disabled in non-developer savefiles. This is to prevent cheating.
-        We have done this because in an upcoming update, the game will include multiplayer features. We apologize for the
-        incovenience. A one-minute timer has been set, and when this timer expires your savefile will be reset. But this isn't
-        the end. If you export your save and send it to Supersonic Seven (supersonicseven_69420) in the Discord and tell him
-        what console command you were trying to enter, he can enter the command for you. Do this quickly.`, {}, 3);
-      setTimeout(() => dev.hardReset(), 60000);
-      if (refreshHacked) dev.hardReset();
-    }
-  });
-};
-
 // Know that both dev.doubleEverything and dev.tripleEverything are both broken
 // with this error https://i.imgur.com/ZMEBNTv.png
 
