@@ -20,7 +20,7 @@ dev.giveAllAchievements = function() {
   for (const achievement of allAchievements) achievement.unlock();
 };
 
-export const refreshHacked = true;
+let refreshHacked = true;
 
 dev.testConsole = function() {
   init((isOpen, type, detail) => {
