@@ -1,9 +1,9 @@
 import "drag-drop-touch";
 import "./shims";
 import "./merge-globals";
-import { browserCheck, init } from "./game";
+import { browserCheck, initLaunch } from "./game";
 import { DEV } from "./env";
 import { watchLatestCommit } from "./commit-watcher";
 
-if (browserCheck()) init();
+if (browserCheck()) initLaunch();
 if (DEV) watchLatestCommit();
