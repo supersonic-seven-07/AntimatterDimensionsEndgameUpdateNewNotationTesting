@@ -21,8 +21,10 @@ dev.giveAllAchievements = function() {
 };
 
 dev.testConsole = function() {
-  init(isOpen => {
+  init((isOpen, type, detail) => {
     console.log(`DevTools ${isOpen ? 'opened' : 'closed'}`);
+    console.log(`Detection method: ${type}`);
+    console.log(`Additional details:`, detail);
   });
 };
 
