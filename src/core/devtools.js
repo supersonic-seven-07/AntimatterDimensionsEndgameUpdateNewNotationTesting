@@ -1,7 +1,5 @@
 import { sha512_256 } from "js-sha512";
 
-import { init } from "detect-devtools";
-
 import { Player } from "./player";
 
 import FullScreenAnimationHandler from "./full-screen-animation-handler";
