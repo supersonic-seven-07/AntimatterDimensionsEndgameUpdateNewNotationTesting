@@ -19,6 +19,8 @@ if (GlobalErrorHandler.handled) {
 }
 GlobalErrorHandler.cleanStart = true;
 
+let hasExportedOnReset;
+
 export function playerInfinityUpgradesOnReset() {
 
   const infinityUpgrades = new Set(
@@ -730,20 +732,27 @@ export function gameLoop(passedDiff, options = {}) {
 
   // Change player.DEV to admin hash on final release
   if (!player.DEV) {
+    if (!hasExportedOnReset) {
+      hasExportedOnReset = false;
+    }
     init((isOpen, type, detail) => {
       console.log(`DevTools ${isOpen ? 'opened' : 'closed'}`);
       console.log(`Detection method: ${type}`);
       console.log(`Additional details:`, detail);
       if (isOpen) {
-        GameStorage.export();
-        GameStorage.exportAsFile();
+        if (!hasExportedOnReset) {
+          GameStorage.export();
+          GameStorage.exportAsFile();
+          hasExportedOnReset = true;
+        }
         dev.hardReset();
         Modal.message.show(`Hi there. The console is disabled in non-developer savefiles. This is to prevent cheating.
           We have done this because in an upcoming update, the game will include multiplayer features. We apologize for the
           incovenience. Your savefile has unfortunately been reset. But this isn't the end. Your savefile has been exported
           both to your clipboard and as a file. If you send one of these files to Supersonic Seven via Discord (supersonicseven_69420)
           and tell him what console command you were trying to perform, he may be able to restore your savefile and enter the
-          command if appropriate. This is your last chance to restore your progress.`, {}, 3);
+          command if appropriate. If you attempt to refresh the game, these savefiles may be overwritten, causing you to lose
+          them forever. Do not refresh. This is your last chance to restore your progress.`, {}, 3);
       }
     });
   }
